@@ -1,0 +1,126 @@
+﻿<Window x:Class="Project_Management.AddTask"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Project_Management"
+        mc:Ignorable="d"
+        Title="Project Management" Height="550" Width="800" 
+        Loaded="Window_Loaded"
+        WindowStartupLocation="CenterScreen">
+
+
+    <Viewbox Stretch="Uniform">
+        <Grid Background="AliceBlue">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="271" />
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50" />
+                <RowDefinition Height="469" />
+            </Grid.RowDefinitions>
+
+            <ListBox Name="Lbx_Task" HorizontalAlignment="Left" Height="335" 
+                 VerticalAlignment="Top" Width="246" Margin="21,52,0,0" Grid.Row="1" SelectionChanged="Lbx_Task_SelectionChanged">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Margin="0,6">
+                        <Run Text="{Binding Title}"/>
+                        <LineBreak/>
+                        <Run Text="Start Date : "/>
+                        <Run Text="{Binding Path=TaskStartDate, StringFormat=dd.MM.yyyy}"/>
+                        <LineBreak/>
+                        <Run Text="Deadline : "/>
+                        <Run Text="{Binding Path=TaskDeadline, StringFormat=dd.MM.yyyy }"/>
+                        </TextBlock>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <StackPanel 
+            HorizontalAlignment="Left"
+            Height="405"
+            VerticalAlignment="Top"
+            Width="412"
+            Grid.Column="1" Grid.Row="1" 
+            Margin="60.8,51.6,0,0"
+            DataContext="{Binding ElementName=Lbx_Task,Path=SelectedItem}">
+
+                <StackPanel HorizontalAlignment="Left" Height="357" VerticalAlignment="Top" Width="392" Margin="10,26,0,0">
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <TextBlock Text="Title" Width="115" FontSize="14" />
+                        <TextBox x:Name="Tbx_title" TextWrapping="Wrap" Width="212" Height="25" Text="{Binding Title}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <TextBlock Text="Description" Width="115" FontSize="14"/>
+                        <TextBox x:Name="Tbx_Description" TextWrapping="Wrap" Width="212" Height="50" ScrollViewer.VerticalScrollBarVisibility="Auto" Text="{Binding Description}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <TextBlock Text="Task Start Date" TextWrapping="Wrap" Width="115" FontSize="14"/>
+                        <DatePicker x:Name="DpTaskStartDate" SelectedDate="{Binding TaskStartDate}" SelectedDateChanged="DpTaskStartDate_SelectedDateChanged"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <TextBlock Text="Task Deadline" TextWrapping="Wrap" Width="115" FontSize="14"/>
+                        <DatePicker x:Name="DpTaskDeadLine" SelectedDate="{Binding TaskDeadline}" SelectedDateChanged="DpTaskDeadLine_SelectedDateChanged" Width="102"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <TextBlock Text="Priority" Width="115" FontSize="14"/>
+                        <ComboBox x:Name="CoBox_TaskPrioprity" Width="212" VerticalAlignment="Top" Grid.Column="1" Height="25" SelectedItem="{Binding Priority}" SelectionChanged="CoBox_TaskPrioprity_SelectionChanged">
+                            <ComboBoxItem HorizontalContentAlignment="Left" IsSelected="True">High</ComboBoxItem>
+                            <ComboBoxItem HorizontalContentAlignment="Left" >Medium</ComboBoxItem>
+                            <ComboBoxItem HorizontalContentAlignment="Left">Low</ComboBoxItem>
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <TextBlock Text="Status" Width="115" FontSize="14"/>
+                        <ComboBox x:Name="CoBox_Status" Width="212" VerticalAlignment="Top" Grid.Column="1" Height="25" SelectedItem="{Binding Status}" SelectionChanged="CoBox_Status_SelectionChanged" >
+                            <ComboBoxItem HorizontalContentAlignment="Left" IsSelected="True">To Do</ComboBoxItem>
+                            <ComboBoxItem HorizontalContentAlignment="Left" >In Progress</ComboBoxItem>
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <TextBlock Text="Dependency On" Width="115" FontSize="14"/>
+                        <ComboBox x:Name="CoBoxDepend_Tsk" Grid.Column="1" HorizontalAlignment="Left" Width="212" VerticalAlignment="Top"></ComboBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <TextBlock Text="Additional Information" Width="115" TextWrapping="Wrap" FontSize="14"/>
+                        <TextBox x:Name="Tbx_Add_Info" Height="50" ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Width="212" Text="{Binding Description}"/>
+                    </StackPanel>
+                </StackPanel>
+
+
+
+            </StackPanel>
+
+            <StackPanel Margin="15,414.6,0,0"  Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Width="246" Height="41" Grid.Row="1">
+                <Button x:Name="Btn_CrtTsk"  Content="CREATE TASK" Click="Btn_CrtTsk_Click" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="116" Height="25" FontSize="13" RenderTransformOrigin="0.5,0.508" Margin="0,0,0,-0.2">
+                    <Button.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="-0.001"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Button.RenderTransform>
+                </Button>
+                <Button x:Name="Btn_Cnl"  Content="CANCEL" Click="Btn_Cnl_Click" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10,0,10,-0.2" Width="120" Height="25" FontSize="13"/>
+            </StackPanel>
+            <StackPanel Grid.ColumnSpan="2" Margin="21,19.6,9.6,429.2" Orientation="Horizontal" Grid.Row="1">
+                <TextBlock Text="Project:" FontSize="12" Width="53"/>
+                <TextBlock  x:Name="TaskProjectTitle" FontSize="14" TextWrapping="Wrap" Width="710" Text="{Binding ProjectTitle}"/>
+            </StackPanel>
+            <Rectangle Fill="DarkCyan" HorizontalAlignment="Left" Height="39" Margin="0,0,-0.4,0" Stroke="Black" VerticalAlignment="Top" Width="794" Grid.ColumnSpan="2"/>
+            <TextBlock HorizontalAlignment="Left" 
+                   TextWrapping="Wrap"
+                   VerticalAlignment="Top"
+                   Margin="44,10,0,0" 
+                   FontSize="16"
+                   Foreground="AntiqueWhite"
+                   FontWeight="Bold"
+                   Grid.Row="0"
+                   Height="21" Text="Add Task" Width="227"/>
+
+        </Grid>
+    </Viewbox>
+</Window>
